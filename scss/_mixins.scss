@@ -1,0 +1,8 @@
+@mixin heading-font {
+  font-family: 'Oswald';
+  font-weight: 700 !important;
+}
+
+@mixin body-font {
+  font-family: 'PT Sans';
+}

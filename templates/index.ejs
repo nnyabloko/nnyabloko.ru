@@ -48,8 +48,8 @@
   <header class="masthead text-right text-black">
     <div class="masthead-content">
       <div class="container">
-        <h1 class="masthead-heading mb-0"> Собираем подписи</h1>
-        <h2 class="masthead-subheading mb-0">демократическим кандидатам в Гордуму </h2>
+        <h1 class="masthead-heading mb-0 text-white bg-danger"> Собираем подписи</h1>
+        <h2 class="masthead-subheading mb-0 text-white bg-success">демократическим кандидатам в Гордуму </h2>
         <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Помочь кампании финансово</a>
       </div>
     </div>
@@ -64,12 +64,12 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 order-lg-2">
-            <div class="p-5">
+            <div class="p-3">
               <img class="img-fluid rounded-circle" src="<%= candidate.img_url %>" alt="">
             </div>
           </div>
           <div class="col-lg-6 order-lg-1">
-            <div class="p-5">
+            <div class="p-3">
               <h2 class="display-4"><%= candidate.name %></h2>
               <p><%= candidate.desc %></p>
             </div>
@@ -78,6 +78,12 @@
       </div>
     </section>
   <% }) %>
+
+  <section>
+    <div class="container" role="main">
+      <%- include('form', {}); %>
+    </div>
+  </section>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>

@@ -10,7 +10,6 @@ const cleanCSS = require("gulp-clean-css");
 const fs = require('fs');
 const del = require("del");
 const gulp = require("gulp");
-const header = require("gulp-header");
 const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
@@ -18,24 +17,13 @@ const sass = require("gulp-sass");
 const Trello = require("trello");
 const ejs = require("gulp-ejs")
 
-// Load package.json for banner
-const pkg = require('./package.json');
-
-// Set the banner content
-const banner = ['/*!\n',
-  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
-  ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
-  ' * Licensed under <%= pkg.license %> (https://github.com/BlackrockDigital/<%= pkg.name %>/blob/master/LICENSE)\n',
-  ' */\n',
-  '\n'
-].join('');
-
 // BrowserSync
 function browserSync(done) {
   browsersync.init({
     server: {
-      baseDir: "./"
+      baseDir: "./dist/"
     },
+    ghostMode: false,
     port: 3000
   });
   done();
@@ -47,19 +35,21 @@ function browserSyncReload(done) {
   done();
 }
 
-// Clean vendor
+// Clean dist
 function clean() {
-  return del(["./vendor/"]);
+  return del(["./dist/"]);
 }
 
 function getData(done) {
   var trello = new Trello(process.env.TRELLO_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
   trello.getCardsOnBoard(process.env.CANDIDATES_BOARD).then((cards) => {
+    var count = 0;
     new Promise((resolve, reject) => {
       cards.forEach((card,i,ar) => {
         trello.makeRequest('get', '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover).then((att) => {
           card.img_url = att.url;
-          if (i === ar.length -1) resolve();
+          count += 1
+          if (count === ar.length) resolve();
         })
       })
     }).then(() => {
@@ -74,13 +64,13 @@ function getData(done) {
 function modules() {
   // Bootstrap
   var bootstrap = gulp.src('./node_modules/bootstrap/dist/**/*')
-    .pipe(gulp.dest('./vendor/bootstrap'));
+    .pipe(gulp.dest('./dist/vendor/bootstrap'));
   // jQuery
   var jquery = gulp.src([
       './node_modules/jquery/dist/*',
       '!./node_modules/jquery/dist/core.js'
     ])
-    .pipe(gulp.dest('./vendor/jquery'));
+    .pipe(gulp.dest('./dist/vendor/jquery'));
   return merge(bootstrap, jquery);
 }
 
@@ -98,25 +88,37 @@ function css() {
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
-    .pipe(gulp.dest("./css"))
+    .pipe(gulp.dest("./dist/css"))
     .pipe(rename({
       suffix: ".min"
     }))
     .pipe(cleanCSS())
-    .pipe(gulp.dest("./css"))
+    .pipe(gulp.dest("./dist/css"))
     .pipe(browsersync.stream());
 }
 
+function files(done) {
+  gulp.src(
+    [
+      './img/**/*',
+      './robots.txt',
+      './favicon.ico'
+    ],
+    {allowEmpty: true, base: '.'}
+  )
+    .pipe(gulp.dest('./dist'));
+  done()
+}
+
 // EJS task
-function ejs_task() {
+function ejs_task(done) {
   // var candidates = JSON.parse(fs.readFileSync('data.json', 'utf8'))
-  return gulp.src('./templates/*.ejs')
+  gulp.src('./templates/index.ejs')
     .pipe(ejs({ candidates: require('./data.json') }))
     .pipe(rename({ extname: '.html' }))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./dist'))
+  browsersync.reload();
+  done();
 }
 
 // Watch files
@@ -128,7 +130,7 @@ function watchFiles() {
 
 // Define complex tasks
 const vendor = gulp.series(clean, modules);
-const build = gulp.series(vendor, css, getData, ejs_task);
+const build = gulp.series(vendor, css, files, getData, ejs_task);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks

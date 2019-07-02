@@ -1,9 +1,13 @@
 "use strict";
 
+// Load environment vars
+require('dotenv').config()
+
 // Load plugins
 const autoprefixer = require("gulp-autoprefixer");
 const browsersync = require("browser-sync").create();
 const cleanCSS = require("gulp-clean-css");
+const fs = require('fs');
 const del = require("del");
 const gulp = require("gulp");
 const header = require("gulp-header");
@@ -11,6 +15,8 @@ const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
+const Trello = require("trello");
+const ejs = require("gulp-ejs")
 
 // Load package.json for banner
 const pkg = require('./package.json');
@@ -45,6 +51,24 @@ function browserSyncReload(done) {
 function clean() {
   return del(["./vendor/"]);
 }
+
+function getData(done) {
+  var trello = new Trello(process.env.TRELLO_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
+  trello.getCardsOnBoard(process.env.CANDIDATES_BOARD).then((cards) => {
+    new Promise((resolve, reject) => {
+      cards.forEach((card,i,ar) => {
+        trello.makeRequest('get', '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover).then((att) => {
+          card.img_url = att.url;
+          if (i === ar.length -1) resolve();
+        })
+      })
+    }).then(() => {
+      fs.writeFileSync('data.json', JSON.stringify(cards));
+      done()
+    })
+  })
+}
+
 
 // Bring third party dependencies from node_modules into vendor directory
 function modules() {
@@ -86,15 +110,25 @@ function css() {
     .pipe(browsersync.stream());
 }
 
+// EJS task
+function ejs_task() {
+  // var candidates = JSON.parse(fs.readFileSync('data.json', 'utf8'))
+  return gulp.src('./templates/*.ejs')
+    .pipe(ejs({ candidates: require('./data.json') }))
+    .pipe(rename({ extname: '.html' }))
+    .pipe(gulp.dest('./'))
+}
+
 // Watch files
 function watchFiles() {
   gulp.watch("./scss/**/*", css);
+  gulp.watch("./templates/**/*", ejs_task);
   gulp.watch("./**/*.html", browserSyncReload);
 }
 
 // Define complex tasks
 const vendor = gulp.series(clean, modules);
-const build = gulp.series(vendor, css);
+const build = gulp.series(vendor, css, getData, ejs_task);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks

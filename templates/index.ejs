@@ -59,79 +59,25 @@
     <div class="bg-circle-4 bg-circle"></div>
   </header>
 
-  
+  <% candidates.forEach(function(candidate) { %>
     <section>
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 order-lg-2">
             <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://trello-attachments.s3.amazonaws.com/5d19c3432b17604f9632fcfd/5d19c3b928b8d229cb719dc8/6257bbe43d77ff0a308d61589b4ef774/207842_1383781372249_full.png" alt="">
+              <img class="img-fluid rounded-circle" src="<%= candidate.img_url %>" alt="">
             </div>
           </div>
           <div class="col-lg-6 order-lg-1">
             <div class="p-5">
-              <h2 class="display-4">Евгений Долгополов</h2>
-              <p>программист телекоммуникационных систем, 28 лет</p>
+              <h2 class="display-4"><%= candidate.name %></h2>
+              <p><%= candidate.desc %></p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6 order-lg-2">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://trello-attachments.s3.amazonaws.com/5d19c3432b17604f9632fcfd/5d19c3c45bfcc7045f23b0cf/c3bcd27b5bbd4ff62baa1477bab45457/1528695739_preview_Azusa_Nakano_new_mugshot.png" alt="">
-            </div>
-          </div>
-          <div class="col-lg-6 order-lg-1">
-            <div class="p-5">
-              <h2 class="display-4">Александр Замышляев</h2>
-              <p>мастер строительных работ, тролль, 30 лет</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6 order-lg-2">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://trello-attachments.s3.amazonaws.com/5d19c3432b17604f9632fcfd/5d19c3cebe994b2ac4f57168/a460ede22f38500f59fe4f9f0296e28d/ab75d7ffae5b4494382fb9aa95062d37.png" alt="">
-            </div>
-          </div>
-          <div class="col-lg-6 order-lg-1">
-            <div class="p-5">
-              <h2 class="display-4">Светлана Фальконская</h2>
-              <p>адвокат, член Президиума Нижегородской коллегии адвокатов «Ника», 32 года</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6 order-lg-2">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="https://trello-attachments.s3.amazonaws.com/5d19c3432b17604f9632fcfd/5d19c3d74009e55882a0aa4a/286c70684df58723cf4c0c99172ad039/Tsumugi_Kotobuki_new_mughot.png" alt="">
-            </div>
-          </div>
-          <div class="col-lg-6 order-lg-1">
-            <div class="p-5">
-              <h2 class="display-4">Никита Антоненко</h2>
-              <p>урбанист, 22 года</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  
+  <% }) %>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>

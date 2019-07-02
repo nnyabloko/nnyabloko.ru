@@ -114,7 +114,7 @@ function files(done) {
 function ejs_task(done) {
   // var candidates = JSON.parse(fs.readFileSync('data.json', 'utf8'))
   gulp.src('./templates/index.ejs')
-    .pipe(ejs({ candidates: require('./data.json') }))
+    .pipe(ejs({ candidates: require('./data.json'), env: process.env }))
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest('./dist'))
   browsersync.reload();

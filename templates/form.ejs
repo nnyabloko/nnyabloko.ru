@@ -1,6 +1,7 @@
-<form class="col-9" action="https://formspree.io/email@domain.tld" method="POST">
+<form class="col-9" action="https://formspree.io/<%= env.FORM_EMAIL %>" method="POST">
+  <input type="hidden" name="_cc" value="<%= env.TRELLO_BOARD_EMAIL %>">
   <fieldset>
-    <legend>Форма записи волонтером</legend>
+    <legend>Анкета участника кампании</legend>
 
     <p>
       <label class="mr-sm-2" for="first_name">Имя</label>
@@ -12,77 +13,43 @@
     <p>
       <label class="mr-sm-2" for="phone">Телефон</label>
       <input class="mb-2 mr-sm-2" type="tel" name="phone" placeholder="8**********">
+      <label class="mr-sm-2" for="email">Email</label>
+      <input class="mb-2 mr-sm-2" type="email" name="email">
     </p>
 
     <p>
-      <label for="select">Example select</label>
-      <select id="select">
-        <option value="">Choose...</option>
-        <optgroup label="Option group 1">
-          <option value="">Option 1</option>
-          <option value="">Option 2</option>
-          <option value="">Option 3</option>
-        </optgroup>
-        <optgroup label="Option group 2">
-          <option value="">Option 4</option>
-          <option value="">Option 5</option>
-          <option value="">Option 6</option>
-        </optgroup>
-      </select>
+      <label for="date">Дата рождения</label>
+      <input type="date" name="birth_date">
+    </p>
+
+    <p>
+      <label class="mr-sm-2">Какому кандидату хотите помочь?</label>
+      <% candidates.forEach((candidate) => { %>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="<%= candidate.name %>">
+          <label class="form-check-label" for="inlineCheckbox1"><%= candidate.name %></label>
+        </div>
+      <% }) %>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" value="Всем">
+        <label class="form-check-label" for="inlineCheckbox1">Всем могу помочь</label>
+      </div>
+    </p>
+
+    <p>
+      <label class="mr-sm-2" for="phone">Страницы в соцсетях</label>
+      <input class="form-control mb-2 mr-sm-2" type="text" name="social_networks">
     </p>
 
     <p>
       <label>
-        <input type="checkbox" value="">
-        Check this checkbox
+        <input type="checkbox" value="" name="agree_processing">
+        Согласие на обработку персональных данных
       </label>
     </p>
 
     <p>
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-        Option one is this and that
-      </label>
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-        Option two is something else that's also super long to demonstrate the wrapping of these fancy form controls.
-      </label>
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled="">
-        Option three is disabled
-      </label>
-    </p>
-
-    <p>
-      <label for="textarea">Example textarea</label>
-      <textarea id="textarea" rows="3"></textarea>
-    </p>
-
-    <p>
-      <label for="date">Example date</label>
-      <input type="date" id="date">
-    </p>
-
-    <p>
-      <label for="time">Example time</label>
-      <input type="time" id="time">
-    </p>
-
-    <p>
-      <label for="output">Example output</label>
-      <output name="result" id="output">100</output>
-    </p>
-
-    <p>
-      <button type="submit">Button submit</button>
-      <input type="submit" value="Input submit button">
-      <input type="button" value="Input button">
-    </p>
-
-    <p>
-      <button type="submit" disabled="">Button submit</button>
-      <input type="submit" value="Input submit button" disabled="">
-      <input type="button" value="Input button" disabled="">
+      <button type="submit" class="btn btn-primary mb-2">Присоединиться к кампании</button>
     </p>
   </fieldset>
 </form>

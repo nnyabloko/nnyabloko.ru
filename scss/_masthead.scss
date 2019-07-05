@@ -21,9 +21,9 @@ header.masthead {
 
   .masthead-text {
     position: relative;
-    top: -25rem;
-    width: 56rem;
-    margin-bottom: -25rem;
+    top: -30rem;
+    width: 100%;
+    margin-bottom: -30rem;
   }
 
   .bg-circle {
@@ -50,11 +50,11 @@ header.masthead {
     right: 5%;
   }
   .bg-circle-4 {
+    height: 40rem;
     background-image: url(../img/bg_center.svg);
-    background-size: 100% 30em;
+    background-size: 100% 50em;
     background-repeat:   no-repeat;
     background-position: center center;
-    height: 30rem;
     width: 100%;
     position: relative;
     top: -8rem;
@@ -74,5 +74,16 @@ header.masthead {
         font-size: 3rem;
       }
     }
+  }
+}
+
+@media (max-width: 991px) {
+  header.masthead .bg-circle-4 {
+    top: 3rem;
+    background-color: $darkblue;
+    height: 35rem;
+  }
+  header.masthead .masthead-text {
+    // top: -35rem;
   }
 }

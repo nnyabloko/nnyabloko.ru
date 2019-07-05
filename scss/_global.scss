@@ -30,3 +30,7 @@ h1 {
 .rounded-pill {
   border-radius: 5rem;
 }
+
+input[name='__'] {
+  display: none;
+}

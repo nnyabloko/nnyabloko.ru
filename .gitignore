@@ -1,5 +1,7 @@
 node_modules
 vendor
 dist/*
+candidates.json
+blocks.json
 data.json
 .env

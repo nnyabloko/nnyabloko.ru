@@ -2,7 +2,7 @@ header.masthead {
   position: relative;
   overflow: hidden;
   padding-top: calc(7rem + 72px);
-  padding-bottom: 2rem;
+  padding-bottom: 0;
   background: url(../img/bg_12345.jpg);
   background-repeat: no-repeat;
   background-position: center top;
@@ -18,6 +18,14 @@ header.masthead {
       font-size: 2rem;
     }
   }
+
+  .masthead-text {
+    position: relative;
+    top: -25rem;
+    width: 56rem;
+    margin-bottom: -25rem;
+  }
+
   .bg-circle {
     z-index: 0;
     // position: absolute;
@@ -43,10 +51,10 @@ header.masthead {
   }
   .bg-circle-4 {
     background-image: url(../img/bg_center.svg);
-    background-size: 100% 20em;
+    background-size: 100% 30em;
     background-repeat:   no-repeat;
     background-position: center center;
-    height: 20rem;
+    height: 30rem;
     width: 100%;
     position: relative;
     top: -8rem;

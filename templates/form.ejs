@@ -1,5 +1,6 @@
-<form class="col-9" action="https://formspree.io/<%= env.FORM_EMAIL %>" method="POST">
+<form class="col-9" action="<%= env.API_URL %>/volunteer" method="POST">
   <input type="hidden" name="_cc" value="<%= env.TRELLO_BOARD_EMAIL %>">
+  <input type="text" name="__">
   <fieldset>
     <legend>Анкета участника кампании</legend>
 
@@ -18,32 +19,32 @@
     </p>
 
     <p>
-      <label for="date">Дата рождения</label>
-      <input type="date" name="birth_date">
+      <label for="date">Возраст</label>
+      <input type="text" name="age">
     </p>
 
     <p>
       <label class="mr-sm-2">Какому кандидату хотите помочь?</label>
       <% candidates.forEach((candidate) => { %>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" value="<%= candidate.name %>">
+          <input class="form-check-input" type="checkbox" name="candidates[]" value="<%= candidate.name %>">
           <label class="form-check-label" for="inlineCheckbox1"><%= candidate.name %></label>
         </div>
       <% }) %>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" value="Всем">
+        <input class="form-check-input" type="checkbox" name="candidates[]" value="Всем">
         <label class="form-check-label" for="inlineCheckbox1">Всем могу помочь</label>
       </div>
     </p>
 
     <p>
-      <label class="mr-sm-2" for="phone">Страницы в соцсетях</label>
+      <label class="mr-sm-2" for="social_networks">Страницы в соцсетях</label>
       <input class="form-control mb-2 mr-sm-2" type="text" name="social_networks">
     </p>
 
     <p>
       <label>
-        <input type="checkbox" value="" name="agree_processing">
+        <input type="checkbox" value="true" name="agree_processing">
         Согласие на обработку персональных данных
       </label>
     </p>

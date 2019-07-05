@@ -16,6 +16,7 @@ const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const Trello = require("trello");
 const ejs = require("gulp-ejs")
+const md = require('markdown-it')();
 
 // BrowserSync
 function browserSync(done) {
@@ -53,8 +54,12 @@ function getData(done) {
         })
       })
     }).then(() => {
-      fs.writeFileSync('data.json', JSON.stringify(cards));
-      done()
+      fs.writeFileSync('candidates.json', JSON.stringify(cards));
+      trello.getCardsOnBoard(process.env.BLOCKS_BOARD).then((blocks) => {
+        var b_map = blocks.map(x => x.desc);
+        fs.writeFileSync('blocks.json', JSON.stringify(b_map));
+        done()
+      })
     })
   })
 }
@@ -112,9 +117,12 @@ function files(done) {
 
 // EJS task
 function ejs_task(done) {
-  // var candidates = JSON.parse(fs.readFileSync('data.json', 'utf8'))
   gulp.src('./templates/index.ejs')
-    .pipe(ejs({ candidates: require('./data.json'), env: process.env }))
+    .pipe(ejs({
+      candidates: require('./candidates.json'),
+      blocks: require('./blocks.json'),
+      env: process.env,
+      md: md }))
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest('./dist'))
   browsersync.reload();
@@ -124,7 +132,7 @@ function ejs_task(done) {
 // Watch files
 function watchFiles() {
   gulp.watch("./scss/**/*", css);
-  gulp.watch("./templates/**/*", ejs_task);
+  gulp.watch("./templates/**/*.ejs", ejs_task);
   gulp.watch("./**/*.html", browserSyncReload);
 }
 

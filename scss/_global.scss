@@ -35,3 +35,20 @@ h1 {
 input[name='__'] {
   display: none;
 }
+
+.candidate em {
+  position: relative;
+  top: 12px;
+  left: 20px;
+  font-style: italic;
+  &:before {
+    content: '„';
+    font-size: 120px;
+    line-height: 0;
+    position: absolute;
+    left: -48px;
+    top: -48px;
+    display: block;
+    font-style: normal;
+  }
+}

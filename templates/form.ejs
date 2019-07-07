@@ -26,8 +26,8 @@
       <label class="mr-sm-2">Какому кандидату хотите помочь?</label>
       <% candidates.forEach((candidate, index) => { %>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" id="candidate-<%= index %>" type="checkbox" name="candidates[]" value="<%= candidate.name %>">
-          <label class="form-check-label" for="candidate-<%= index %>"><%= candidate.name %></label>
+          <input class="form-check-input cursor-pointer" id="candidate-<%= index %>" type="checkbox" name="candidates[]" value="<%= candidate.name %>">
+          <label class="form-check-label cursor-pointer" for="candidate-<%= index %>"><%= candidate.name %></label>
         </div>
       <% }) %>
     </p>
@@ -38,7 +38,7 @@
     </p>
 
     <p>
-      <label>
+      <label class="cursor-pointer">
         <input type="checkbox" value="true" name="agree_processing" required>
         Согласие на обработку персональных данных
       </label>

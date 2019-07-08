@@ -1,2 +1,2 @@
-web: bundle exec puma -p $PORT
+web: bundle e rerun --no-notify --quiet "bundle e puma -p $PORT -v"
 gulp: npm start

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'puma'
+gem 'rerun'
 gem 'roda'
 gem 'tilt'
 gem 'sucker_punch'

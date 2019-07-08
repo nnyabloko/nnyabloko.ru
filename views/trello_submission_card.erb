@@ -3,4 +3,4 @@
 Email: <%= email %>
 Возраст: <%= age %>
 Какому кандидату хотите помочь?: <%= candidates.join(', ') %>
-Соцсети: <%= social_networks %>
+Соцсети: <%= social_networks.map { |a| a.join ": " }.join ", " %>

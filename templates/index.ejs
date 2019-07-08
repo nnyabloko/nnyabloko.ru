@@ -125,6 +125,10 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  <% if (process.env.GA_ID) { %>
+    <%- include('gtm', {}); %>
+  <% } %>
+
 </body>
 
 </html>

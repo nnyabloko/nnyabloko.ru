@@ -1,51 +1,63 @@
-<form class="col-9" action="<%= env.API_URL %>/volunteer" method="POST">
-  <input type="text" name="__">
-  <fieldset>
-    <legend>Анкета участника кампании</legend>
+<section>
+  <div class="container mb-5" id="volunteer" role="main">
+    <div class="alert alert-success d-none" role="alert">
+      Спасибо, вы присоединились к созданию новой политики!
+    </div>
+    <form class="col-9 mb-5" id="volunteer-form" action="<%= env.API_URL %>/volunteer" method="POST">
+      <input type="text" name="__">
+      <fieldset>
+        <legend>Анкета участника кампании</legend>
 
-    <p>
-      <label class="mr-sm-2" for="first_name">Имя</label>
-      <input class="mb-2 mr-sm-2" type="text" name="first_name">
-      <label class="mr-sm-2" for="last_name">Фамилия</label>
-      <input class="mb-2 mr-sm-2" type="text" name="last_name">
-    </p>
+        <p>
+          <label class="mr-sm-2" for="first_name">Имя</label>
+          <input class="mb-2 mr-sm-2" type="text" name="first_name">
+          <label class="mr-sm-2" for="last_name">Фамилия</label>
+          <input class="mb-2 mr-sm-2" type="text" name="last_name">
+        </p>
 
-    <p>
-      <label class="mr-sm-2" for="phone">Телефон</label>
-      <input class="mb-2 mr-sm-2" type="tel" name="phone" placeholder="8**********">
-      <label class="mr-sm-2" for="email">Email</label>
-      <input class="mb-2 mr-sm-2" type="email" name="email">
-    </p>
+        <p>
+          <label class="mr-sm-2" for="phone">Телефон</label>
+          <input class="mb-2 mr-sm-2" type="tel" name="phone" placeholder="8**********">
+          <label class="mr-sm-2" for="email">Email</label>
+          <input class="mb-2 mr-sm-2" type="email" name="email">
+        </p>
 
-    <p>
-      <label for="date">Возраст</label>
-      <input type="text" name="age">
-    </p>
+        <p>
+          <label for="date">Возраст</label>
+          <input type="text" name="age">
+        </p>
 
-    <p>
-      <label class="mr-sm-2">Какому кандидату хотите помочь?</label>
-      <% candidates.forEach((candidate, index) => { %>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input cursor-pointer" id="candidate-<%= index %>" type="checkbox" name="candidates[]" value="<%= candidate.name %>">
-          <label class="form-check-label cursor-pointer" for="candidate-<%= index %>"><%= candidate.name %></label>
-        </div>
-      <% }) %>
-    </p>
+        <p>
+          <label class="mr-sm-2">Какому кандидату хотите помочь?</label>
+          <% candidates.forEach((candidate, index) => { %>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input cursor-pointer" id="candidate-<%= index %>" type="checkbox" name="candidates[]" value="<%= candidate.name %>">
+              <label class="form-check-label cursor-pointer" for="candidate-<%= index %>"><%= candidate.name %></label>
+            </div>
+          <% }) %>
+        </p>
 
-    <p>
-      <label class="mr-sm-2" for="social_networks">Страницы в соцсетях</label>
-      <input class="form-control mb-2 mr-sm-2" type="text" name="social_networks">
-    </p>
+        <p>
+          <label class="mr-sm-2">Страницы в соцсетях</label><br>
+          <label class="mr-sm-2" for="fb">FB:</label>
+          <input class="mb-2 mr-sm-2" id="fb" type="text" name="social_networks[]">
+          <label class="mr-sm-2" for="vk">VK:</label>
+          <input class="mb-2 mr-sm-2" id="vk" type="text" name="social_networks[]">
+          <!-- <label><input class="form-control mb-2 mr-sm-2" type="text" name="social_networks[]">VK:</label> -->
+          <!-- <label><input class="form-control mb-2 mr-sm-2" type="text" name="social_networks[]">FB:</label> -->
+        </p>
 
-    <p>
-      <label class="cursor-pointer">
-        <input type="checkbox" value="true" name="agree_processing" required>
-        Согласие на обработку персональных данных
-      </label>
-    </p>
+        <p>
+          <label class="cursor-pointer">
+            <input type="checkbox" value="true" name="agree_processing" required>
+            Согласие на обработку персональных данных
+          </label>
+        </p>
 
-    <p>
-      <button type="submit" class="btn btn-primary mb-2">Присоединиться к кампании</button>
-    </p>
-  </fieldset>
-</form>
+        <p>
+          <button type="submit" class="btn btn-primary mb-2">Присоединиться к кампании</button>
+        </p>
+      </fieldset>
+    </form>
+  </div>
+</section>

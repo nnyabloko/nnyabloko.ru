@@ -1,18 +1,15 @@
 header.masthead {
   position: relative;
   overflow: hidden;
-  padding-top: calc(7rem + 72px);
+  padding-top: calc(0rem + 72px);
   padding-bottom: 0;
-  background: url(../img/bg_12345.jpg);
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-attachment: scroll;
-  background-size: 60% auto;
   .masthead-content {
     z-index: 1;
     position: relative;
+    font-family: 'Montserrat';
+    font-weight: 800 !important;
     .masthead-heading {
-      font-size: 4rem;
+      // font-size: 4rem;
     }
     .masthead-subheading {
       font-size: 2rem;
@@ -21,15 +18,13 @@ header.masthead {
 
   .masthead-text {
     position: relative;
-    top: -30rem;
+    top: -31rem;
     width: 100%;
     margin-bottom: -30rem;
   }
 
   .bg-circle {
     z-index: 0;
-    // position: absolute;
-    // border-radius: 100%;
   }
   .bg-circle-1 {
     height: 90rem;
@@ -64,11 +59,11 @@ header.masthead {
 
 @media (min-width: 992px) {
   header.masthead {
-    padding-top: calc(10rem + 55px);
+    padding-top: calc(3rem + 55px);
     padding-bottom: 3rem;
     .masthead-content {
       .masthead-heading {
-        font-size: 5rem;
+        font-size: 4rem;
       }
       .masthead-subheading {
         font-size: 3rem;

@@ -72,7 +72,7 @@ class App < Roda
     r.post "volunteer" do
       return unless r.params['__'].to_s.empty?
       Submission.new(r.params)
-      r.redirect "#{ENV['HOSTNAME']}/index.html"
+      r.redirect "#{ENV['HOSTNAME']}/\#volunteer"
     end
   end
 end

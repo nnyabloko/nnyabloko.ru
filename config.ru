@@ -12,6 +12,11 @@ if ENV['ENVIRONMENT'] == 'development'
   require 'sucker_punch/testing/inline'
 end
 
+DB = Dir.glob("data/*.json").map do |f|
+    [File.basename(f, ".json").to_sym, JSON.parse(File.read(f))]
+  end
+  .yield_self {|a| Hash[a] }
+
 TrelloClient = Trello::Client.new(
   developer_public_key: ENV['TRELLO_PUBLIC_KEY'],
   member_token: ENV['TRELLO_MEMBER_TOKEN']
@@ -67,6 +72,11 @@ class App < Roda
 
     r.is "v1" do
       "OK"
+    end
+
+    r.is "map", [Integer, true] do |district_number|
+      district = DB[:districts].find {|d| d['name'].to_i == district_number.to_i}
+      r.redirect district['desc'].to_s[/https:\/\/yandex\.ru\/maps\/-\/.+/]
     end
 
     r.post "volunteer" do

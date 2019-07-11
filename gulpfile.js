@@ -42,6 +42,7 @@ function clean() {
 }
 
 function getData(done) {
+  del(["./data/*.json"]);
   var trello = new Trello(process.env.TRELLO_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
   trello.getCardsOnBoard(process.env.CANDIDATES_BOARD).then((cards) => {
     var count = 0;
@@ -54,11 +55,14 @@ function getData(done) {
         })
       })
     }).then(() => {
-      fs.writeFileSync('candidates.json', JSON.stringify(cards));
+      fs.writeFileSync('data/candidates.json', JSON.stringify(cards));
       trello.getCardsOnBoard(process.env.BLOCKS_BOARD).then((blocks) => {
         var b_map = blocks.map(x => x.desc);
-        fs.writeFileSync('blocks.json', JSON.stringify(b_map));
-        done()
+        fs.writeFileSync('data/blocks.json', JSON.stringify(b_map));
+        trello.getCardsOnBoard(process.env.DISTRICTS_BOARD).then((disctricts) => {
+          fs.writeFileSync('data/districts.json', JSON.stringify(disctricts));
+          done()
+        })
       })
     })
   })
@@ -119,8 +123,8 @@ function files(done) {
 function ejs_task(done) {
   gulp.src('./templates/index.ejs')
     .pipe(ejs({
-      candidates: require('./candidates.json'),
-      blocks: require('./blocks.json'),
+      candidates: require('./data/candidates.json'),
+      blocks: require('./data/blocks.json'),
       env: process.env,
       md: md }))
     .pipe(rename({ extname: '.html' }))

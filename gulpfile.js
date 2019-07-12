@@ -48,7 +48,8 @@ function getData(done) {
     var count = 0;
     new Promise((resolve, reject) => {
       cards.forEach((card,i,ar) => {
-        trello.makeRequest('get', '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover).then((att) => {
+        var req_path = '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover
+        trello.makeRequest('get', req_path).then((att) => {
           card.img_url = att.url;
           count += 1
           if (count === ar.length) resolve();

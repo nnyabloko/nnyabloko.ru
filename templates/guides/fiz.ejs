@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <p style="color:red;">Если вы оплачиваете через интернет-банк, не указанный в наших инструкциях, в разделе «Оплата» выбирайте категорию «По реквизитам» или «По квитанции». Не делайте переводов на частное лицо, они не достигнут счёта кандидата!</p>
+  <h4>Чтобы пополнить через интернет-банк или в любом отделении необходимо указать следующие реквизиты:</h4>
+  <div class="row align-items-center">
+    <div class="col-lg-8">
+      <table>
+        <tbody>
+      	  <tr>
+      		  <td>Получатель:</td>
+      			<td><span class="details__candidate-full-name"></span><%= candidate.fullName %></td>
+      		</tr>
+      		<tr>
+      		  <td>Расч. счёт №:</td>
+      			<td><span class="details__candidate-account"></span><%= candidate.rs %></td>
+      	  </tr>
+      		<tr>
+      		  <td>ИНН (кандидата):</td>
+      			<td><span class="details__candidate-inn"></span><%= candidate.inn %></td>
+      		</tr>
+      		<tr>
+      			<td>Банк получателя:</td>
+      			<td><span class="details__bank"></span><%= candidate.bank %></td>
+      		</tr>
+      		<tr>
+      			<td>БИК:</td>
+      			<td><span class="details__bik"></span><%= candidate.bik %></td>
+      		</tr>
+      		<tr>
+      			<td>Кор.счёт №:</td>
+      			<td><span class="details__cor-account"></span><%= candidate.ks %></td>
+      		</tr>
+      		<tr>
+      			<td>ИНН (указывается банка):</td>
+      			<td><span class="details__bank-inn"></span>7707083893</td>
+      		</tr>
+      		<tr>
+      			<td>КПП (указывается банка):</td>
+      			<td><span class="details__bank-kpp"></span>526002001</td>
+      		</tr>
+      		<tr>
+      			<td>№ филиала банка, где был открыт:</td>
+      			<td><span class="details__bank-branch-number"></span><%= candidate.filial %></td>
+      		</tr>
+      	</tbody>
+      </table>
+      <p>Назначение платежа (очень важно правильно заполнить этот пункт):</p>
+      <p><i>Пожертвование. ваши ФИО, ваша дата рождения, гражданство РФ, ваш адрес по прописке с указанием региона, номер паспорта</i></p>
+      <p>Например (можно сокращать):</p>
+      <p><i>Пожертвование. Иванов Александр Константинович, 16.02.1990, Нижегородская обл. Н. Новгород, ул.Маршала Рокоссовского, 233а кв. 200, паспорт 2222 222222, гр. РФ</i></p>
+      <p>Пожертвование от одного физического лица на избирательный счет не может превышать 700 тысяч рублей.</p>
+    </div>
+  </div>
+</div>

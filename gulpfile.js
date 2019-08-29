@@ -16,7 +16,10 @@ const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const Trello = require("trello");
 const ejs = require("gulp-ejs")
+const glob = require("glob")
 const md = require('markdown-it')();
+const lvovich = require('lvovich');
+const slugify = require('@sindresorhus/slugify');
 
 // BrowserSync
 function browserSync(done) {
@@ -48,6 +51,8 @@ function getData(done) {
     var count = 0;
     new Promise((resolve, reject) => {
       cards.forEach((card,i,ar) => {
+        card.first_name = card.name.split(' ')[0]
+        card.last_name = card.name.split(' ')[1]
         var req_path = '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover
         trello.makeRequest('get', req_path).then((att) => {
           card.img_url = att.url;
@@ -56,13 +61,25 @@ function getData(done) {
         })
       })
     }).then(() => {
-      fs.writeFileSync('data/candidates.json', JSON.stringify(cards));
-      trello.getCardsOnBoard(process.env.BLOCKS_BOARD).then((blocks) => {
-        var b_map = blocks.map(x => x.desc);
-        fs.writeFileSync('data/blocks.json', JSON.stringify(b_map));
-        trello.getCardsOnBoard(process.env.DISTRICTS_BOARD).then((disctricts) => {
-          fs.writeFileSync('data/districts.json', JSON.stringify(disctricts));
-          done()
+      trello.getCardsOnBoard(process.env.ACCOUNTS_BOARD).then((accs) => {
+        accs.forEach((acc,i,ar) => {
+          var cand = cards.find( card => card.name === acc.name )
+          cand.fullName = acc.desc.match(/Имя: (.+)/i)[1]
+          cand.rs = acc.desc.match(/р\/счет: (.+)/i)[1]
+          cand.bank = acc.desc.match(/Банк: (.+)/i)[1]
+          cand.filial = acc.desc.match(/Филиал: (.+)/i)[1]
+          cand.ks = acc.desc.match(/корр.счет: (.+)/i)[1]
+          cand.bik = acc.desc.match(/БИК: (.+)/i)[1]
+          cand.inn = acc.desc.match(/ИНН: (.+)/i)[1]
+        })
+        fs.writeFileSync('data/candidates.json', JSON.stringify(cards));
+        trello.getCardsOnBoard(process.env.BLOCKS_BOARD).then((blocks) => {
+          var b_map = blocks.map(x => x.desc);
+          fs.writeFileSync('data/blocks.json', JSON.stringify(b_map));
+          trello.getCardsOnBoard(process.env.DISTRICTS_BOARD).then((disctricts) => {
+            fs.writeFileSync('data/districts.json', JSON.stringify(disctricts));
+            done()
+          })
         })
       })
     })
@@ -122,11 +139,14 @@ function files(done) {
 
 // EJS task
 function ejs_task(done) {
-  gulp.src('./templates/index.ejs')
+  gulp.src(['./templates/index.ejs', './templates/donate.ejs'])
     .pipe(ejs({
       candidates: require('./data/candidates.json'),
       blocks: require('./data/blocks.json'),
       env: process.env,
+      glob: glob,
+      lvovich: lvovich,
+      slugify: slugify,
       md: md }))
     .pipe(rename({ extname: '.html' }))
     .pipe(gulp.dest('./dist'))
@@ -139,6 +159,7 @@ function watchFiles() {
   gulp.watch("./scss/**/*", css);
   gulp.watch("./templates/**/*.ejs", ejs_task);
   gulp.watch("./**/*.html", browserSyncReload);
+  gulp.watch("./img/**/*", files);
 }
 
 // Define complex tasks

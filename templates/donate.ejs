@@ -1,18 +1,20 @@
 <% candidates.forEach((candidate, index) => { %>
-  <section class="donate-block" id="donate_<%= slugify(candidate.last_name) %>">
-    <% payments.forEach((payment) => { %>
-      <div class="d-none donate-block container mt-4" id="donate_<%= slugify(candidate.last_name) %>_<%= payment.id %>">
-        <div class="row mb-4">
-          <% payments.forEach((pmnt) => { %>
-            <div class="col-4">
-              <a class="donation-link" href="#donate_<%= slugify(candidate.last_name) %>_<%= pmnt.id %>">
-                <%= pmnt.name %>
-              </a>
-            </div>
-          <% }) %>
-        </div>
-        <%- include("guides/"+payment.id, {candidate: candidate}) -%>
+  <% payments.forEach((payment) => { %>
+    <div class="d-none donate-block container mt-4" id="donate_<%= slugify(candidate.last_name) %>_<%= payment.id %>">
+      <div class="row mb-4">
+        <% payments.forEach((pmnt) => { %>
+          <div class="col-4">
+            <a class="donation-link <%= pmnt.id === payment.id ? 'selected-donation' : '' %>" href="#donate_<%= slugify(candidate.last_name) %>_<%= pmnt.id %>">
+              <%= pmnt.name %>
+            </a>
+          </div>
+        <% }) %>
       </div>
-    <% }) %>
-  </section>
+      <div class="card col-sm-10">
+        <div class="card-body">
+          <%- include("guides/"+payment.id, {candidate: candidate}) -%>
+        </div>
+      </div>
+    </div>
+  <% }) %>
 <% }) %>

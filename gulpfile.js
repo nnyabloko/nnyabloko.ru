@@ -27,7 +27,7 @@ const payments = [
   {name: "Тинькофф", id: "tinkoff"},
   {name: "Альфа-банк сайт", id: "alfa-site"},
   {name: "Альфа-банк приложение", id: "alfa-app"},
-  {name: "Рокетбанк", id: "rocket"}
+  {name: "Рокетбанк", id: "rocket"},
   {name: "ВТБ сайт", id: "vtb-site"}
 ]
 

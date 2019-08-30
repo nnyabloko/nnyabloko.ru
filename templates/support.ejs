@@ -47,13 +47,13 @@
           </div>
           <div class="d-flex flex-row">
             <div class="p-2">
-              <a href="#volunteer-form" class="d-block display-4 btn btn-primary btn-xl rounded-pill">
+              <a href="#volunteer-form" class="d-block display-4 btn btn-primary btn-xl">
                 Помочь
                 <%= lvovich.inclineFirstname(candidate.first_name, 'dative') %>
               </a>
             </div>
             <div class="p-2">
-              <a href="#donate_<%= slugify(candidate.last_name) %>" class="d-block display-4 btn btn-success btn-xl rounded-pill">Сделать пожертвование</a>
+              <a href="#donate_<%= slugify(candidate.last_name) %>" class="d-block display-4 btn btn-success btn-xl">Сделать пожертвование</a>
             </div>
           </div>
         </div>

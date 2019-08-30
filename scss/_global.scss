@@ -65,3 +65,12 @@ input[name='__'] {
   height: 2rem;
   width: 2rem;
 }
+
+.donation-link {
+  font-size: 20px;
+  color: inherit;
+  &:hover {
+    color: $green;
+    text-decoration: none;
+  }
+}

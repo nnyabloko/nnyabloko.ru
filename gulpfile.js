@@ -20,6 +20,15 @@ const glob = require("glob")
 const md = require('markdown-it')();
 const lvovich = require('lvovich');
 const slugify = require('@sindresorhus/slugify');
+const payments = [
+  {name: "Реквизиты для физлиц", id: "fiz"},
+  {name: "Сбербанк сайт", id: "sber-online"},
+  {name: "Сбербанк приложение", id: "sber-app"},
+  {name: "Тинькофф", id: "tinkoff"},
+  {name: "Альфа-банк сайт", id: "alfa-site"},
+  {name: "Альфа-банк приложение", id: "alfa-app"},
+  {name: "Рокетбанк", id: "rocket"}
+]
 
 // BrowserSync
 function browserSync(done) {
@@ -145,6 +154,7 @@ function ejs_task(done) {
       blocks: require('./data/blocks.json'),
       env: process.env,
       glob: glob,
+      payments: payments,
       lvovich: lvovich,
       slugify: slugify,
       md: md }))

@@ -1,8 +1,13 @@
 <% candidates.forEach((candidate, index) => { %>
-  <section class="d-none donate-block" id="donate_<%= slugify(candidate.last_name) %>">
-    <% glob.sync("templates/guides/*.ejs").reverse().forEach((f) => { %>
-      <div class="container mt-4">
-        <%- include(f.replace("templates/", ""), {candidate: candidate}) -%>
+  <section class="donate-block" id="donate_<%= slugify(candidate.last_name) %>">
+    <% payments.forEach((payment) => { %>
+      <div class="d-none donate-block container mt-4" id="donate_<%= slugify(candidate.last_name) %>_<%= payment.id %>">
+        <% payments.forEach((pmnt) => { %>
+          <a href="#donate_<%= slugify(candidate.last_name) %>_<%= pmnt.id %>">
+            <%= pmnt.name %>
+          </a>
+        <% }) %>
+        <%- include("guides/"+payment.id, {candidate: candidate}) -%>
       </div>
     <% }) %>
   </section>

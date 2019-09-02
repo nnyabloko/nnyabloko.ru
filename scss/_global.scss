@@ -20,6 +20,30 @@ h1 {
   // font-size: 4rem;
 }
 
+.logo {
+  @include logo-font;
+  margin-top: 4rem;
+}
+
+.logopic {
+  // position: relative;
+  // bottom: 4px;
+  vertical-align: top;
+}
+
+.top-pic {
+    padding: 2rem 0 3rem 0;
+    margin-bottom: 2rem;
+    background-color: $darkblue;
+    border-radius: .3rem;
+
+}
+
+.obnovlenie{
+    color: $white;
+    text-align: center;
+}
+
 .btn-xl {
   text-transform: uppercase;
   padding: .5rem 1rem;

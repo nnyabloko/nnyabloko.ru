@@ -54,47 +54,6 @@ function clean() {
   return del(["./dist/"]);
 }
 
-function getData(done) {
-  del(["./data/*.json"]);
-  var trello = new Trello(process.env.TRELLO_PUBLIC_KEY, process.env.TRELLO_MEMBER_TOKEN)
-  trello.getCardsOnBoard(process.env.CANDIDATES_BOARD).then((cards) => {
-    var count = 0;
-    new Promise((resolve, reject) => {
-      cards.forEach((card,i,ar) => {
-        card.first_name = card.name.split(' ')[0]
-        card.last_name = card.name.split(' ')[1]
-        var req_path = '/1/cards/'+card.id+'/attachments/'+card.idAttachmentCover
-        trello.makeRequest('get', req_path).then((att) => {
-          card.img_url = att.url;
-          count += 1
-          if (count === ar.length) resolve();
-        })
-      })
-    }).then(() => {
-      trello.getCardsOnBoard(process.env.ACCOUNTS_BOARD).then((accs) => {
-        accs.forEach((acc,i,ar) => {
-          var cand = cards.find( card => card.name === acc.name )
-          cand.fullName = acc.desc.match(/Имя: (.+)/i)[1]
-          cand.rs = acc.desc.match(/р\/счет: (.+)/i)[1]
-          cand.bank = acc.desc.match(/Банк: (.+)/i)[1]
-          cand.filial = acc.desc.match(/Филиал: (.+)/i)[1]
-          cand.ks = acc.desc.match(/корр.счет: (.+)/i)[1]
-          cand.bik = acc.desc.match(/БИК: (.+)/i)[1]
-          cand.inn = acc.desc.match(/ИНН: (.+)/i)[1]
-        })
-        fs.writeFileSync('data/candidates.json', JSON.stringify(cards));
-        trello.getCardsOnBoard(process.env.BLOCKS_BOARD).then((blocks) => {
-          var b_map = blocks.map(x => x.desc);
-          fs.writeFileSync('data/blocks.json', JSON.stringify(b_map));
-          trello.getCardsOnBoard(process.env.DISTRICTS_BOARD).then((disctricts) => {
-            fs.writeFileSync('data/districts.json', JSON.stringify(disctricts));
-            done()
-          })
-        })
-      })
-    })
-  })
-}
 
 
 // Bring third party dependencies from node_modules into vendor directory
@@ -149,10 +108,8 @@ function files(done) {
 
 // EJS task
 function ejs_task(done) {
-  gulp.src(['./templates/index.ejs', './templates/donate.ejs'])
+  gulp.src(['./templates/index.ejs'])
     .pipe(ejs({
-      candidates: require('./data/candidates.json'),
-      blocks: require('./data/blocks.json'),
       env: process.env,
       glob: glob,
       payments: payments,
@@ -175,7 +132,7 @@ function watchFiles() {
 
 // Define complex tasks
 const vendor = gulp.series(clean, modules);
-const build = gulp.series(vendor, css, files, getData, ejs_task);
+const build = gulp.series(vendor, css, files, ejs_task);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 
 // Export tasks

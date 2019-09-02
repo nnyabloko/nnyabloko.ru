@@ -4,7 +4,7 @@ html {
 
 body {
   @include body-font;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 h1,
@@ -64,45 +64,10 @@ h1 {
   cursor: pointer;
 }
 
-input[name='__'] {
-  display: none;
+.buttons .btn {
+  width: 100%;
 }
 
-.candidate em {
-  position: relative;
-  top: 12px;
-  left: 20px;
-  font-style: italic;
-  &:before {
-    content: '„';
-    font-size: 120px;
-    line-height: 0;
-    position: absolute;
-    left: -48px;
-    top: -48px;
-    display: block;
-    font-style: normal;
-  }
-}
-
-.socialicon {
-  height: 2rem;
-  width: 2rem;
-}
-
-.donate-block {
-  margin-bottom: 80px;
-}
-
-.donation-link {
-  font-size: 20px;
-  color: inherit;
-  &:hover {
-    color: $green;
-    text-decoration: none;
-  }
-}
-
-.selected-donation {
-  color: $green;
+.navigation {
+  margin-top: -15px
 }

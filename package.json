@@ -34,7 +34,7 @@
         "bootstrap": "4.3.1",
         "dotenv": "^8.0.0",
         "gulp-ejs": "^4.1.1",
-        "jquery": "3.4.1",
+        "jquery": "3.5.0",
         "lvovich": "^1.0.14",
         "markdown-it": "^8.4.2",
         "trello": "^0.9.1"
